@@ -7,14 +7,22 @@ import GridControls from "./components/GridControls";
 const SIDELENGTH = 4;
 const COLORS = ['#ADD8E6', '#77DD77', '#ff6961', '#FDFD96'];
 function generateColorArr(colors, sideLength) {
-  let arr = [];
+  let emptyObj = {};
+  let count = 0;
   let num = Math.floor(Math.pow(sideLength, 2)/colors.length);
-  for(const c of colors){
+  let clrObj = colors.map(c => {
     for(let i = 0; i<num; i++) {
-      arr.push(c);
+      emptyObj[count] = c;
+      count++;
     }
-  }
-  return arr;
+    return emptyObj;
+  })
+//   for(const c of colors){
+//     for(let i = 0; i<num; i++) {
+//       arr.push(c);
+//     }
+//   }
+  return clrObj;
 }
 
 const initCombination = generateColorArr(COLORS, SIDELENGTH);
@@ -25,10 +33,10 @@ function App() {
 
   //Fisher-Yates Shuffle
   const shuffleHandler = () => {
-    console.log("test1");
+    console.log("test1" + colorCombination);
     setCombination(prevComb => {
         let newArr = prevComb;
-        let currentIndex = newArr.length,  randomIndex;
+        let currentIndex = Object.keys(newArr).length,  randomIndex;
     
         // While there remain elements to shuffle...
         while (currentIndex !== 0) {
@@ -40,7 +48,7 @@ function App() {
           // And swap it with the current element.
           [newArr[currentIndex], newArr[randomIndex]] = [newArr[randomIndex], newArr[currentIndex]];
         }
-        console.log("test2");
+        console.log("test2" + newArr);
         return newArr;
     })
   }
